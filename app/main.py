@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.routers import users, credentials,email_accounts,credit_cards,devices
-
+from fastapi.middleware.cors import CORSMiddleware
+from app.routers import users, credentials, email_accounts, credit_cards, devices
 
 app = FastAPI(
     title="password_saver_api",
@@ -8,6 +8,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# ✅ Allow all origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],   # Allow all HTTP methods
+    allow_headers=["*"],   # Allow all headers
+)
+
+# ✅ Include Routers
 app.include_router(users.router)
 app.include_router(credentials.router)
 app.include_router(email_accounts.router)
